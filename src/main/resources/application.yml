@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    # Cambiamos 'sql_server_peirano' por la IP elástica de la instancia de BD
+    url: jdbc:sqlserver://3.214.40.101:1433;databaseName=BodegaPeiranoDB;encrypt=false;trustServerCertificate=true
+    username: sa
+    password: YourStrong@Password
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+    
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: dd/MM/yyyy HH:mm:ss
+
+server:
+  port: 8085
+
+# Configuración adicional para que el backend acepte peticiones desde tu Angular
+springdoc:
+  api-docs:
+    path: /api-docs
