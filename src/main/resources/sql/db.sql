@@ -1,14 +1,17 @@
 -- Script de inicialización para Bodega Peirano con Auditoría
 -- Base de datos: BodegaPeiranoDB
 
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'BodegaPeiranoDB')
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'BodegaPeiranoDBF')
 BEGIN
-    CREATE DATABASE BodegaPeiranoDB;
+    CREATE DATABASE BodegaPeiranoDBF;
 END
 GO
 
-USE BodegaPeiranoDB;
+USE BodegaPeiranoDBF;
 GO
+
+
+
 
 -- 2. TABLA DE APOYO: CATEGORIA
 CREATE TABLE categoria (
@@ -40,6 +43,29 @@ CREATE TABLE producto (
     
     CONSTRAINT producto_pk PRIMARY KEY (id_producto)
 );
+CREATE TABLE Cliente (
+    id_cliente INT PRIMARY KEY IDENTITY(1,1), -- Equivalente a AUTO_INCREMENT en MySQL
+    tipo_documento CHAR(3) NOT NULL,
+    numero_docum VARCHAR(12) NOT NULL UNIQUE, -- Unique por validación en backend
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    correo VARCHAR(150) NOT NULL UNIQUE, -- Unique por @Column(unique = true)
+    telefono VARCHAR(15) NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    estado BIT NOT NULL DEFAULT 1, -- BIT equivale a BOOLEAN, 1 = true
+
+
+
+    -- Campos de Auditoría
+    fecha_creacion DATETIME DEFAULT GETDATE(), -- Equivalente a CURRENT_TIMESTAMP
+    fecha_actualizacion DATETIME NULL,
+    fecha_eliminacion DATETIME NULL,
+    fecha_restauracion DATETIME NULL,
+
+);
+
+
+
 
 -- 4. RELACIÓN
 ALTER TABLE producto ADD CONSTRAINT producto_categoria_fk

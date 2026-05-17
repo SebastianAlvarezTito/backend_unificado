@@ -1,11 +1,10 @@
 spring:
   datasource:
-    # Cambiamos 'sql_server_peirano' por la IP elástica de la instancia de BD
-    url: jdbc:sqlserver://3.214.40.101:1433;databaseName=BodegaPeiranoDB;encrypt=false;trustServerCertificate=true
-    username: sa
-    password: YourStrong@Password
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  
+    url: ${DATABASE_URL:jdbc:sqlserver://localhost:1433;databaseName=BodegaPeiranoDBF;encrypt=false;trustServerCertificate=true}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:TuPasswordFuerte123!}
+    driver-class-name: ${DATABASE_DRIVER:com.microsoft.sqlserver.jdbc.SQLServerDriver}
+  #sdas
   jpa:
     hibernate:
       ddl-auto: update
@@ -20,9 +19,25 @@ spring:
     date-format: dd/MM/yyyy HH:mm:ss
 
 server:
-  port: 8085
+  port: ${PORT:8085}  # Valor por defecto si PORT no está configurado
 
 # Configuración adicional para que el backend acepte peticiones desde tu Angular
 springdoc:
   api-docs:
     path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html # Ruta para acceder a Swagger UI: http://localhost:8085/swagger-ui.html
+
+
+
+
+
+
+
+
+
+
+# CORS - Se leen desde variables de entorno definidas en docker-compose
+  #cors:
+  #allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200} # Valor por defecto si no se define la variable de entorno
