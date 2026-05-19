@@ -1,4 +1,4 @@
-package example.sebastian;
+package pe.edu.vallegrande.mybackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
